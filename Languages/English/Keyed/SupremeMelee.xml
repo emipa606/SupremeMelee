@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <SupremeMelee_DualWieldingFactor>Dual wielding modifier</SupremeMelee_DualWieldingFactor>
+  <SupremeMelee_VerboseParryReadout>Verbose parry mote message (Default: False)</SupremeMelee_VerboseParryReadout>
+  <SupremeMelee_AnimalSizeScaling>Scale animal body size to skill with parrier. Scale = Animal / Parrier (Default: True)</SupremeMelee_AnimalSizeScaling>
+  <SupremeMelee_ParryMagnitude>Parry magnitude (Default: 2) {0}</SupremeMelee_ParryMagnitude>
+  <SupremeMelee_MaxParryChance>Maximum parry chance (Default: 0.95)</SupremeMelee_MaxParryChance>
+  <SupremeMelee_TextMote_Parry>Parry ({0})</SupremeMelee_TextMote_Parry>
+</LanguageData>

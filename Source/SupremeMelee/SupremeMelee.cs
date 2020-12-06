@@ -1,0 +1,57 @@
+﻿using UnityEngine;
+using Verse;
+
+namespace SupremeMelee
+{
+    // Token: 0x02000004 RID: 4
+    public class SupremeMelee : Mod
+	{
+		// Token: 0x06000003 RID: 3 RVA: 0x0000262C File Offset: 0x0000082C
+		public SupremeMelee(ModContentPack content) : base(content)
+		{
+            Instance = this;
+			SupremeMeleeModSettings.Instance = GetSettings<SupremeMeleeModSettings>();
+			var flag = SupremeMeleeModSettings.Instance != null;
+			if (flag)
+			{
+				parryMagnitudeBuffer = SupremeMeleeModSettings.Instance.parryMagnitude.ToString();
+				maxParryChanceBuffer = SupremeMeleeModSettings.Instance.maximumParryChance.ToString();
+			}
+		}
+
+		// Token: 0x06000004 RID: 4 RVA: 0x0000268C File Offset: 0x0000088C
+		public override string SettingsCategory()
+		{
+			return "SupremeMelee";
+		}
+
+		// Token: 0x06000005 RID: 5 RVA: 0x000026A4 File Offset: 0x000008A4
+		public override void DoSettingsWindowContents(Rect inRect)
+		{
+			var num = 0;
+			var rowHeight = 48f;
+			var inRect2 = new Rect(inRect);
+			Rect rowRect = UIHelper.GetRowRect(inRect2, rowHeight, num);
+			num++;
+			Widgets.CheckboxLabeled(rowRect, "SupremeMelee_VerboseParryReadout".Translate(), ref SupremeMeleeModSettings.Instance.verboseParryReadout, false, null, null, false);
+			Rect rowRect2 = UIHelper.GetRowRect(inRect2, rowHeight, num);
+			num++;
+			Widgets.CheckboxLabeled(rowRect2, "SupremeMelee_AnimalSizeScaling".Translate(), ref SupremeMeleeModSettings.Instance.animalSizeScaling, false, null, null, false);
+			Rect rowRect3 = UIHelper.GetRowRect(inRect2, rowHeight, num);
+			num++;
+			Widgets.TextFieldNumericLabeled(rowRect3, "SupremeMelee_ParryMagnitude".Translate(string.Format("Min={0}, Max={1}", SupremeMeleeModSettings.Instance.MinParryMagnitude, SupremeMeleeModSettings.Instance.MaxParryMagnitude)), ref SupremeMeleeModSettings.Instance.parryMagnitude, ref parryMagnitudeBuffer, 1f, 1E+09f);
+			Rect rowRect4 = UIHelper.GetRowRect(inRect2, rowHeight, num);
+			num++;
+			Widgets.TextFieldNumericLabeled(rowRect4, "SupremeMelee_MaxParryChance".Translate(), ref SupremeMeleeModSettings.Instance.maximumParryChance, ref maxParryChanceBuffer, 0.01f, 1E+09f);
+		}
+
+		// Token: 0x04000004 RID: 4
+		public static SupremeMelee Instance;
+
+		// Token: 0x04000005 RID: 5
+		public string parryMagnitudeBuffer;
+
+		// Token: 0x04000006 RID: 6
+		public string maxParryChanceBuffer;
+	}
+}
