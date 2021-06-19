@@ -35,7 +35,8 @@ namespace SupremeMelee
                 }
 
                 var pawn = __instance;
-                if (pawn.Downed || pawn.InBed() || pawn.IsBurning() || (pawn.stances?.stunner?.Stunned ?? false) || !pawn.Drafted &&
+                if (pawn.Downed || pawn.InBed() || pawn.IsBurning() || (pawn.stances?.stunner?.Stunned ?? false) ||
+                    !pawn.Drafted &&
                     !(pawn.stances?.curStance is Stance_Busy) && !(pawn.stances?.curStance is Stance_Warmup))
                 {
                     return true;
@@ -89,6 +90,7 @@ namespace SupremeMelee
                     {
                         return true;
                     }
+
                     if (pawn.Map != null)
                     {
                         SoundDefOf.Crunch?.PlayOneShot(new TargetInfo(pawn.Position, pawn.Map));
@@ -136,7 +138,7 @@ namespace SupremeMelee
 
                 var num6 = pawn.skills?.GetSkill(SkillDefOf.Melee)?.Level ?? 0;
                 var num7 = 10f;
-                if (dinfo.Instigator is Pawn pawn3 && pawn3.skills != null)
+                if (dinfo.Instigator is Pawn {skills: { }} pawn3)
                 {
                     num7 = pawn3.skills.GetSkill(SkillDefOf.Shooting)?.Level ?? 0;
                 }
@@ -162,7 +164,8 @@ namespace SupremeMelee
                     {
                         MoteMaker.ThrowText(pawn.DrawPos, pawn.Map,
                             "SupremeMelee_TextMote_Parry".Translate(
-                                $"{num9.ToStringPercent()}={meleeParryProjectileChance}*{num8}={num6}M/{num7}S "), 3.9f);
+                                $"{num9.ToStringPercent()}={meleeParryProjectileChance}*{num8}={num6}M/{num7}S "),
+                            3.9f);
                     }
                     else
                     {
@@ -179,6 +182,7 @@ namespace SupremeMelee
             {
                 Log.Error("Error in Supreme Melee: " + ex);
             }
+
             return false;
         }
     }
