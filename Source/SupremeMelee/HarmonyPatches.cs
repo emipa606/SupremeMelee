@@ -27,143 +27,158 @@ namespace SupremeMelee
         public static bool Patch_Pawn_PreApplyDamage(ref Pawn __instance, ref DamageInfo dinfo, out bool absorbed)
         {
             absorbed = false;
-            if (dinfo.Instigator == null)
+            try
             {
-                return true;
-            }
+                if (dinfo.Instigator == null)
+                {
+                    return true;
+                }
 
-            var pawn = __instance;
-            if (pawn.Downed || pawn.InBed() || pawn.IsBurning() || pawn.stances.stunner.Stunned || !pawn.Drafted &&
-                !(pawn.stances.curStance is Stance_Busy) && !(pawn.stances.curStance is Stance_Warmup))
-            {
-                return true;
-            }
+                var pawn = __instance;
+                if (pawn.Downed || pawn.InBed() || pawn.IsBurning() || (pawn.stances?.stunner?.Stunned ?? false) || !pawn.Drafted &&
+                    !(pawn.stances?.curStance is Stance_Busy) && !(pawn.stances?.curStance is Stance_Warmup))
+                {
+                    return true;
+                }
 
-            if (dinfo.WeaponBodyPartGroup != null || dinfo.Weapon != null && dinfo.Weapon.IsMeleeWeapon)
-            {
+                if (dinfo.WeaponBodyPartGroup != null || dinfo.Weapon != null && dinfo.Weapon.IsMeleeWeapon)
+                {
+                    if (!pawn.IsWieldingMeleeWeapons())
+                    {
+                        return true;
+                    }
+
+                    if (SupremeMeleeStatDefOf.SupremeMelee_MeleeParryMeleeChance.Worker.IsDisabledFor(pawn))
+                    {
+                        return true;
+                    }
+
+                    var meleeParryMeleeChance =
+                        pawn.GetStatValue(SupremeMeleeStatDefOf.SupremeMelee_MeleeParryMeleeChance);
+                    if (!(meleeParryMeleeChance > 0f))
+                    {
+                        return true;
+                    }
+
+                    var defenderMeleeSkill = pawn.skills?.GetSkill(SkillDefOf.Melee)?.Level ?? 0f;
+                    var attackerMeleeSkillBalanced = 10f;
+                    if (dinfo.Instigator is Pawn instigator)
+                    {
+                        if (instigator.skills == null)
+                        {
+                            var animalSizeScaling = SupremeMeleeModSettings.Instance.animalSizeScaling;
+                            if (animalSizeScaling)
+                            {
+                                var bodySizeDifference = instigator.BodySize / pawn.BodySize;
+                                attackerMeleeSkillBalanced = Mathf.Clamp(10f * bodySizeDifference, 10f, 25f);
+                            }
+                        }
+                        else
+                        {
+                            attackerMeleeSkillBalanced = instigator.skills.GetSkill(SkillDefOf.Melee)?.Level ?? 0;
+                        }
+                    }
+
+                    var meleeSkillDifference = Mathf.Clamp(defenderMeleeSkill / attackerMeleeSkillBalanced,
+                        SupremeMeleeModSettings.Instance.MinParryMagnitude,
+                        SupremeMeleeModSettings.Instance.MaxParryMagnitude);
+                    var effectiveParryChance = Math.Min(meleeParryMeleeChance * meleeSkillDifference,
+                        SupremeMeleeModSettings.Instance.maximumParryChance);
+                    if (!Rand.Chance(effectiveParryChance) &&
+                        (!pawn.IsDualWielding() || !Rand.Chance(effectiveParryChance)))
+                    {
+                        return true;
+                    }
+                    if (pawn.Map != null)
+                    {
+                        SoundDefOf.Crunch?.PlayOneShot(new TargetInfo(pawn.Position, pawn.Map));
+                        var loc = pawn.TrueCenter() +
+                                  (Vector3Utility.HorizontalVectorFromAngle(dinfo.Angle).RotatedBy(180f) * 0.5f);
+                        var scale = Mathf.Min(10f, 2f + (dinfo.Amount / 10f));
+                        MoteMaker.MakeStaticMote(loc, pawn.Map, ThingDefOf.Mote_ExplosionFlash, scale);
+                        var verboseParryReadout = SupremeMeleeModSettings.Instance.verboseParryReadout;
+                        if (verboseParryReadout)
+                        {
+                            MoteMaker.ThrowText(pawn.DrawPos, pawn.Map,
+                                "SupremeMelee_TextMote_Parry".Translate(
+                                    $"{effectiveParryChance.ToStringPercent()}={meleeParryMeleeChance}*{meleeSkillDifference}={defenderMeleeSkill}M/{attackerMeleeSkillBalanced}M "),
+                                3.9f);
+                        }
+                        else
+                        {
+                            MoteMaker.ThrowText(pawn.DrawPos, pawn.Map,
+                                "SupremeMelee_TextMote_Parry".Translate(effectiveParryChance.ToStringPercent()),
+                                1.9f);
+                        }
+                    }
+
+
+                    absorbed = true;
+                    return false;
+                }
+
+                if (dinfo.Weapon == null || !dinfo.Weapon.IsRangedWeapon)
+                {
+                    return true;
+                }
+
                 if (!pawn.IsWieldingMeleeWeapons())
                 {
                     return true;
                 }
 
-                if (SupremeMeleeStatDefOf.SupremeMelee_MeleeParryMeleeChance.Worker.IsDisabledFor(pawn))
+                var meleeParryProjectileChance =
+                    pawn.GetStatValue(SupremeMeleeStatDefOf.SupremeMelee_MeleeParryProjectileChance);
+                if (!(meleeParryProjectileChance > 0f))
                 {
                     return true;
                 }
 
-                var meleeParryMeleeChance =
-                    pawn.GetStatValue(SupremeMeleeStatDefOf.SupremeMelee_MeleeParryMeleeChance);
-                if (!(meleeParryMeleeChance > 0f))
+                var num6 = pawn.skills?.GetSkill(SkillDefOf.Melee)?.Level ?? 0;
+                var num7 = 10f;
+                if (dinfo.Instigator is Pawn pawn3 && pawn3.skills != null)
+                {
+                    num7 = pawn3.skills.GetSkill(SkillDefOf.Shooting)?.Level ?? 0;
+                }
+
+                var num8 = Mathf.Clamp(num6 / num7, SupremeMeleeModSettings.Instance.MinParryMagnitude,
+                    SupremeMeleeModSettings.Instance.MaxParryMagnitude);
+                var num9 = Math.Min(meleeParryProjectileChance * num8,
+                    SupremeMeleeModSettings.Instance.maximumParryChance);
+                if (!Rand.Chance(num9) && (!pawn.IsDualWielding() || !Rand.Chance(num9)))
                 {
                     return true;
                 }
 
-                var defenderMeleeSkill = (float) pawn.skills.GetSkill(SkillDefOf.Melee).Level;
-                var attackerMeleeSkillBalanced = 10f;
-                if (dinfo.Instigator is Pawn instigator)
+                if (pawn.Map != null)
                 {
-                    if (instigator.skills == null)
+                    SoundDefOf.BulletImpact_Ground?.PlayOneShot(new TargetInfo(pawn.Position, pawn.Map));
+                    var loc2 = pawn.TrueCenter() +
+                               (Vector3Utility.HorizontalVectorFromAngle(dinfo.Angle).RotatedBy(180f) * 0.5f);
+                    var scale2 = Mathf.Min(10f, 2f + (dinfo.Amount / 10f));
+                    MoteMaker.MakeStaticMote(loc2, pawn.Map, ThingDefOf.Mote_ExplosionFlash, scale2);
+                    var verboseParryReadout2 = SupremeMeleeModSettings.Instance.verboseParryReadout;
+                    if (verboseParryReadout2)
                     {
-                        var animalSizeScaling = SupremeMeleeModSettings.Instance.animalSizeScaling;
-                        if (animalSizeScaling)
-                        {
-                            var bodySizeDifference = instigator.BodySize / pawn.BodySize;
-                            attackerMeleeSkillBalanced = Mathf.Clamp(10f * bodySizeDifference, 10f, 25f);
-                        }
+                        MoteMaker.ThrowText(pawn.DrawPos, pawn.Map,
+                            "SupremeMelee_TextMote_Parry".Translate(
+                                $"{num9.ToStringPercent()}={meleeParryProjectileChance}*{num8}={num6}M/{num7}S "), 3.9f);
                     }
                     else
                     {
-                        attackerMeleeSkillBalanced = instigator.skills.GetSkill(SkillDefOf.Melee).Level;
+                        MoteMaker.ThrowText(pawn.DrawPos, pawn.Map,
+                            "SupremeMelee_TextMote_Parry".Translate(num9.ToStringPercent()), 1.9f);
                     }
                 }
 
-                var meleeSkillDifference = Mathf.Clamp(defenderMeleeSkill / attackerMeleeSkillBalanced,
-                    SupremeMeleeModSettings.Instance.MinParryMagnitude,
-                    SupremeMeleeModSettings.Instance.MaxParryMagnitude);
-                var effectiveParryChance = Math.Min(meleeParryMeleeChance * meleeSkillDifference,
-                    SupremeMeleeModSettings.Instance.maximumParryChance);
-                if (!Rand.Chance(effectiveParryChance) &&
-                    (!pawn.IsDualWielding() || !Rand.Chance(effectiveParryChance)))
-                {
-                    return true;
-                }
-
-                SoundDefOf.Crunch.PlayOneShot(new TargetInfo(pawn.Position, pawn.Map));
-                var loc = pawn.TrueCenter() +
-                          (Vector3Utility.HorizontalVectorFromAngle(dinfo.Angle).RotatedBy(180f) * 0.5f);
-                var scale = Mathf.Min(10f, 2f + (dinfo.Amount / 10f));
-                MoteMaker.MakeStaticMote(loc, pawn.Map, ThingDefOf.Mote_ExplosionFlash, scale);
-                var verboseParryReadout = SupremeMeleeModSettings.Instance.verboseParryReadout;
-                if (verboseParryReadout)
-                {
-                    MoteMaker.ThrowText(pawn.DrawPos, pawn.Map,
-                        "SupremeMelee_TextMote_Parry".Translate(
-                            $"{effectiveParryChance.ToStringPercent()}={meleeParryMeleeChance}*{meleeSkillDifference}={defenderMeleeSkill}M/{attackerMeleeSkillBalanced}M "),
-                        3.9f);
-                }
-                else
-                {
-                    MoteMaker.ThrowText(pawn.DrawPos, pawn.Map,
-                        "SupremeMelee_TextMote_Parry".Translate(effectiveParryChance.ToStringPercent()),
-                        1.9f);
-                }
 
                 absorbed = true;
                 return false;
             }
-
-            if (dinfo.Weapon == null || !dinfo.Weapon.IsRangedWeapon)
+            catch (Exception ex)
             {
-                return true;
+                Log.Error("Error in Supreme Melee: " + ex);
             }
-
-            if (!pawn.IsWieldingMeleeWeapons())
-            {
-                return true;
-            }
-
-            var meleeParryProjectileChance =
-                pawn.GetStatValue(SupremeMeleeStatDefOf.SupremeMelee_MeleeParryProjectileChance);
-            if (!(meleeParryProjectileChance > 0f))
-            {
-                return true;
-            }
-
-            var num6 = (float) pawn.skills.GetSkill(SkillDefOf.Melee).Level;
-            var num7 = 10f;
-            if (dinfo.Instigator is Pawn pawn3 && pawn3.skills != null)
-            {
-                num7 = pawn3.skills.GetSkill(SkillDefOf.Shooting).Level;
-            }
-
-            var num8 = Mathf.Clamp(num6 / num7, SupremeMeleeModSettings.Instance.MinParryMagnitude,
-                SupremeMeleeModSettings.Instance.MaxParryMagnitude);
-            var num9 = Math.Min(meleeParryProjectileChance * num8,
-                SupremeMeleeModSettings.Instance.maximumParryChance);
-            if (!Rand.Chance(num9) && (!pawn.IsDualWielding() || !Rand.Chance(num9)))
-            {
-                return true;
-            }
-
-            SoundDefOf.BulletImpact_Ground.PlayOneShot(new TargetInfo(pawn.Position, pawn.Map));
-            var loc2 = pawn.TrueCenter() +
-                       (Vector3Utility.HorizontalVectorFromAngle(dinfo.Angle).RotatedBy(180f) * 0.5f);
-            var scale2 = Mathf.Min(10f, 2f + (dinfo.Amount / 10f));
-            MoteMaker.MakeStaticMote(loc2, pawn.Map, ThingDefOf.Mote_ExplosionFlash, scale2);
-            var verboseParryReadout2 = SupremeMeleeModSettings.Instance.verboseParryReadout;
-            if (verboseParryReadout2)
-            {
-                MoteMaker.ThrowText(pawn.DrawPos, pawn.Map,
-                    "SupremeMelee_TextMote_Parry".Translate(
-                        $"{num9.ToStringPercent()}={meleeParryProjectileChance}*{num8}={num6}M/{num7}S "), 3.9f);
-            }
-            else
-            {
-                MoteMaker.ThrowText(pawn.DrawPos, pawn.Map,
-                    "SupremeMelee_TextMote_Parry".Translate(num9.ToStringPercent()), 1.9f);
-            }
-
-            absorbed = true;
             return false;
         }
     }
