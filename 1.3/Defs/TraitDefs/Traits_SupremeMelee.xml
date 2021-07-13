@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <TraitDef>
+    <defName>SupremeMelee_QuickReflexes</defName>
+    <degreeDatas>
+      <li>
+        <degree>1</degree>
+        <label>quick reflexes</label>
+        <description>{PAWN_nameDef} reflexes are truly out of this world. They can parry melee attacks without any training and with luck even bullets.</description>
+        <statOffsets>
+          <SupremeMelee_MeleeParryMeleeChance>10</SupremeMelee_MeleeParryMeleeChance>
+          <SupremeMelee_MeleeParryProjectileChance>5</SupremeMelee_MeleeParryProjectileChance>
+          <MeleeDodgeChance>10</MeleeDodgeChance>
+        </statOffsets>
+      </li>
+      <li>
+        <degree>2</degree>
+        <label>transcendant reflexes</label>
+        <description>{PAWN_nameDef} reflexes transcends common sense. They can easily parry melee attacks without any training and with a bit of luck even bullets.</description>
+        <statOffsets>
+          <SupremeMelee_MeleeParryMeleeChance>20</SupremeMelee_MeleeParryMeleeChance>
+          <SupremeMelee_MeleeParryProjectileChance>10</SupremeMelee_MeleeParryProjectileChance>
+          <MeleeDodgeChance>20</MeleeDodgeChance>
+        </statOffsets>
+      </li>
+    </degreeDatas>
+    <commonality>0.2</commonality>
+    <conflictingTraits>
+      <li>Wimp</li>
+    </conflictingTraits>
+    <requiredWorkTags>
+      <li>Violent</li>
+    </requiredWorkTags>
+  </TraitDef>
+</Defs>

@@ -16,8 +16,7 @@ namespace SupremeMelee
         public SupremeMelee(ModContentPack content) : base(content)
         {
             SupremeMeleeModSettings.Instance = GetSettings<SupremeMeleeModSettings>();
-            var flag = SupremeMeleeModSettings.Instance != null;
-            if (!flag)
+            if (SupremeMeleeModSettings.Instance == null)
             {
                 return;
             }

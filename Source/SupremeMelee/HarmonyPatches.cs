@@ -42,7 +42,7 @@ namespace SupremeMelee
                     return true;
                 }
 
-                if (dinfo.WeaponBodyPartGroup != null || dinfo.Weapon != null && dinfo.Weapon.IsMeleeWeapon)
+                if (dinfo.WeaponBodyPartGroup != null || dinfo.Weapon is {IsMeleeWeapon: true})
                 {
                     if (!pawn.IsWieldingMeleeWeapons())
                     {
@@ -97,7 +97,7 @@ namespace SupremeMelee
                         var loc = pawn.TrueCenter() +
                                   (Vector3Utility.HorizontalVectorFromAngle(dinfo.Angle).RotatedBy(180f) * 0.5f);
                         var scale = Mathf.Min(10f, 2f + (dinfo.Amount / 10f));
-                        MoteMaker.MakeStaticMote(loc, pawn.Map, ThingDefOf.Mote_ExplosionFlash, scale);
+                        FleckMaker.Static(loc, pawn.Map, FleckDefOf.ExplosionFlash, scale);
                         var verboseParryReadout = SupremeMeleeModSettings.Instance.verboseParryReadout;
                         if (verboseParryReadout)
                         {
@@ -158,7 +158,7 @@ namespace SupremeMelee
                     var loc2 = pawn.TrueCenter() +
                                (Vector3Utility.HorizontalVectorFromAngle(dinfo.Angle).RotatedBy(180f) * 0.5f);
                     var scale2 = Mathf.Min(10f, 2f + (dinfo.Amount / 10f));
-                    MoteMaker.MakeStaticMote(loc2, pawn.Map, ThingDefOf.Mote_ExplosionFlash, scale2);
+                    FleckMaker.Static(loc2, pawn.Map, FleckDefOf.ExplosionFlash, scale2);
                     var verboseParryReadout2 = SupremeMeleeModSettings.Instance.verboseParryReadout;
                     if (verboseParryReadout2)
                     {

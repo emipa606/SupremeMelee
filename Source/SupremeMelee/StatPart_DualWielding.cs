@@ -12,9 +12,8 @@ namespace SupremeMelee
         // Token: 0x0600000A RID: 10 RVA: 0x000028AC File Offset: 0x00000AAC
         public override string ExplanationPart(StatRequest req)
         {
-            var flag = req.Thing is Pawn pawn && pawn.IsDualWielding();
             string result;
-            if (flag)
+            if (req.Thing is Pawn pawn && pawn.IsDualWielding())
             {
                 result = "SupremeMelee_DualWieldingFactor".Translate() + ": x" + dualWieldingFactor.ToStringPercent();
             }
@@ -29,8 +28,7 @@ namespace SupremeMelee
         // Token: 0x0600000B RID: 11 RVA: 0x0000290C File Offset: 0x00000B0C
         public override void TransformValue(StatRequest req, ref float val)
         {
-            var flag = req.Thing is Pawn pawn && pawn.IsDualWielding();
-            if (flag)
+            if (req.Thing is Pawn pawn && pawn.IsDualWielding())
             {
                 val *= dualWieldingFactor;
             }
