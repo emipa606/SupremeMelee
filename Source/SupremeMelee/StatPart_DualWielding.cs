@@ -1,37 +1,32 @@
-﻿using RimWorld;
+using RimWorld;
 using Verse;
 
-namespace SupremeMelee
+namespace SupremeMelee;
+
+public class StatPart_DualWielding : StatPart
 {
-    // Token: 0x02000006 RID: 6
-    public class StatPart_DualWielding : StatPart
+    private readonly float dualWieldingFactor = 0.6f;
+
+    public override string ExplanationPart(StatRequest req)
     {
-        // Token: 0x0400000C RID: 12
-        private readonly float dualWieldingFactor = 0.6f;
-
-        // Token: 0x0600000A RID: 10 RVA: 0x000028AC File Offset: 0x00000AAC
-        public override string ExplanationPart(StatRequest req)
+        string result;
+        if (req.Thing is Pawn pawn && pawn.IsDualWielding())
         {
-            string result;
-            if (req.Thing is Pawn pawn && pawn.IsDualWielding())
-            {
-                result = "SupremeMelee_DualWieldingFactor".Translate() + ": x" + dualWieldingFactor.ToStringPercent();
-            }
-            else
-            {
-                result = null;
-            }
-
-            return result;
+            result = "SupremeMelee_DualWieldingFactor".Translate() + ": x" + dualWieldingFactor.ToStringPercent();
+        }
+        else
+        {
+            result = null;
         }
 
-        // Token: 0x0600000B RID: 11 RVA: 0x0000290C File Offset: 0x00000B0C
-        public override void TransformValue(StatRequest req, ref float val)
+        return result;
+    }
+
+    public override void TransformValue(StatRequest req, ref float val)
+    {
+        if (req.Thing is Pawn pawn && pawn.IsDualWielding())
         {
-            if (req.Thing is Pawn pawn && pawn.IsDualWielding())
-            {
-                val *= dualWieldingFactor;
-            }
+            val *= dualWieldingFactor;
         }
     }
 }

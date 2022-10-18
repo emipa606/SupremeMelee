@@ -1,15 +1,11 @@
-﻿using RimWorld;
+using RimWorld;
 
-namespace SupremeMelee
+namespace SupremeMelee;
+
+[DefOf]
+public static class SupremeMeleeStatDefOf
 {
-    // Token: 0x02000002 RID: 2
-    [DefOf]
-    public static class SupremeMeleeStatDefOf
-    {
-        // Token: 0x04000001 RID: 1
-        public static StatDef SupremeMelee_MeleeParryProjectileChance;
+    public static StatDef SupremeMelee_MeleeParryProjectileChance;
 
-        // Token: 0x04000002 RID: 2
-        public static StatDef SupremeMelee_MeleeParryMeleeChance;
-    }
+    public static StatDef SupremeMelee_MeleeParryMeleeChance;
 }

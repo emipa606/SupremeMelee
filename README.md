@@ -1,25 +1,18 @@
 # SupremeMelee
 
-![Image](https://i.imgur.com/WAEzk68.png)
+![Image](https://i.imgur.com/buuPQel.png)
 
 Update of ChJees mod
 https://steamcommunity.com/sharedfiles/filedetails/?id=1841138974
 
 - Added support for https://steamcommunity.com/sharedfiles/filedetails/?id=2451324814][SYR] Trait Value
 
-![Image](https://i.imgur.com/7Gzt3Rg.png)
+For a CE friendly alternative, try https://steamcommunity.com/sharedfiles/filedetails/?id=2068326756]Rebound
 
+![Image](https://i.imgur.com/pufA0kM.png)
 
-[table]
-    [tr]
-        [td]https://invite.gg/Mlie]![Image](https://i.imgur.com/zdzzBrc.png)
-[/td]
-        [td]https://github.com/emipa606/SupremeMelee]![Image](https://i.imgur.com/kTkpTOE.png)
-[/td]
-    [/tr]
-[/table]
 	
-![Image](https://i.imgur.com/NOW7jU1.png)
+![Image](https://i.imgur.com/Z4GOv8H.png)
 
 This mod is there to relieve of the feeling that melee oriented bionic monstrosities are too squishy. By utilizing superhuman reflexes can they now block projectiles and parry melee attacks with their weapons.
 Even non augmented pawns can take advantage of this mod, starting at level 15 melee skill they gain a 10% parry chance against projectiles and 20% at level 20 skill melee.
@@ -32,7 +25,7 @@ Credits:
 ChJees – Concept, C# and XML
 Trunken - Art, Preview image
 
-![Image](https://i.imgur.com/Rs6T6cr.png)
+![Image](https://i.imgur.com/PwoNOj4.png)
 
 
 
