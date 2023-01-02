@@ -39,3 +39,4 @@ Trunken - Art, Preview image
 
 
 
+https://steamcommunity.com/sharedfiles/filedetails/changelog/2311299987]Last updated 2023-01-02
