@@ -115,12 +115,17 @@ public static class HarmonyPatches
                 return false;
             }
 
-            if (dinfo.Weapon == null || !dinfo.Weapon.IsRangedWeapon)
+            if (dinfo.Weapon is not { IsRangedWeapon: true })
             {
                 return true;
             }
 
             if (!pawn.IsWieldingMeleeWeapons())
+            {
+                return true;
+            }
+
+            if (SupremeMeleeStatDefOf.SupremeMelee_MeleeParryProjectileChance.Worker.IsDisabledFor(pawn))
             {
                 return true;
             }
@@ -134,7 +139,7 @@ public static class HarmonyPatches
 
             var num6 = pawn.skills?.GetSkill(SkillDefOf.Melee)?.Level ?? 0;
             var num7 = 10f;
-            if (dinfo.Instigator is Pawn { skills: { } } pawn3)
+            if (dinfo.Instigator is Pawn { skills: not null } pawn3)
             {
                 num7 = pawn3.skills.GetSkill(SkillDefOf.Shooting)?.Level ?? 0;
             }

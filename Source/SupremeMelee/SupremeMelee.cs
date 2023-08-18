@@ -22,7 +22,7 @@ public class SupremeMelee : Mod
         parryMagnitudeBuffer = SupremeMeleeModSettings.Instance.parryMagnitude.ToString();
         maxParryChanceBuffer = SupremeMeleeModSettings.Instance.maximumParryChance.ToString();
         currentVersion =
-            VersionFromManifest.GetVersionFromModMetaData(ModLister.GetActiveModWithIdentifier("Mlie.SupremeMelee"));
+            VersionFromManifest.GetVersionFromModMetaData(content.ModMetaData);
     }
 
     public override string SettingsCategory()

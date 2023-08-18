@@ -37,6 +37,4 @@ Trunken - Art, Preview image
 -  If you have the solution for a problem, please post it to the GitHub repository.
 
 
-
-
-https://steamcommunity.com/sharedfiles/filedetails/changelog/2311299987]Last updated 2023-01-02
+https://steamcommunity.com/sharedfiles/filedetails/changelog/2311299987]Last updated 2023-08-18

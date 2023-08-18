@@ -1,5 +1,8 @@
 # Changelog for SupremeMelee
 
+1.4.3 - Checks for disabled stats before fetching the stat-value
+
+
 1.4.2 - Nicer wording for the trait descriptions, thanks Daeharde Trihardt
 
 
