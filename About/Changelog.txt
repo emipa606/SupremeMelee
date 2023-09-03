@@ -1,5 +1,8 @@
 # Changelog for SupremeMelee
 
+1.4.4 - Fixed the patch for Cybernetic Organism and Neural Network
+
+
 1.4.3 - Checks for disabled stats before fetching the stat-value
 
 
