@@ -1,5 +1,8 @@
 # Changelog for SupremeMelee
 
+1.5.0 - Mod updated for 1.5 and passed autotests
+
+
 1.4.4 - Fixed the patch for Cybernetic Organism and Neural Network
 
 

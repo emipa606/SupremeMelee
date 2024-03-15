@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Patch>
+  <Operation Class="PatchOperationConditional">
+    <xpath>/Defs/HediffDef[defName='CONN_hediff_BerserkerChip']</xpath>
+    <success>Always</success>
+    <match Class="PatchOperationAdd">
+      <xpath>/Defs/HediffDef[defName='CONN_hediff_BerserkerChip' or defName='CONN_hediff_CombatAI' or defName='CONN_hediff_Musclewire']/stages/li/statOffsets</xpath>
+      <order>Append</order>
+      <value>
+        <SupremeMelee_MeleeParryMeleeChance>6</SupremeMelee_MeleeParryMeleeChance>
+        <SupremeMelee_MeleeParryProjectileChance>2</SupremeMelee_MeleeParryProjectileChance>
+      </value>
+    </match>
+  </Operation>
+</Patch>
