@@ -17,7 +17,7 @@ public static class HarmonyPatches
         var harmony = new Harmony("chjees.suprememelee");
         var typeFromHandle = typeof(Pawn);
         harmony.Patch(typeFromHandle.GetMethod("PreApplyDamage"),
-            new HarmonyMethod(typeof(HarmonyPatches).GetMethod("Patch_Pawn_PreApplyDamage")));
+            new HarmonyMethod(typeof(HarmonyPatches).GetMethod(nameof(Patch_Pawn_PreApplyDamage))));
     }
 
     public static bool Patch_Pawn_PreApplyDamage(ref Pawn __instance, ref DamageInfo dinfo, out bool absorbed)
@@ -63,7 +63,7 @@ public static class HarmonyPatches
                 {
                     if (instigator.skills == null)
                     {
-                        var animalSizeScaling = SupremeMeleeModSettings.Instance.animalSizeScaling;
+                        var animalSizeScaling = SupremeMeleeModSettings.Instance.AnimalSizeScaling;
                         if (animalSizeScaling)
                         {
                             var bodySizeDifference = instigator.BodySize / pawn.BodySize;
@@ -80,7 +80,7 @@ public static class HarmonyPatches
                     SupremeMeleeModSettings.Instance.MinParryMagnitude,
                     SupremeMeleeModSettings.Instance.MaxParryMagnitude);
                 var effectiveParryChance = Math.Min(meleeParryMeleeChance * meleeSkillDifference,
-                    SupremeMeleeModSettings.Instance.maximumParryChance);
+                    SupremeMeleeModSettings.Instance.MaximumParryChance);
                 if (!Rand.Chance(effectiveParryChance) &&
                     (!pawn.IsDualWielding() || !Rand.Chance(effectiveParryChance)))
                 {
@@ -94,7 +94,7 @@ public static class HarmonyPatches
                               (Vector3Utility.HorizontalVectorFromAngle(dinfo.Angle).RotatedBy(180f) * 0.5f);
                     var scale = Mathf.Min(10f, 2f + (dinfo.Amount / 10f));
                     FleckMaker.Static(loc, pawn.Map, FleckDefOf.ExplosionFlash, scale);
-                    var verboseParryReadout = SupremeMeleeModSettings.Instance.verboseParryReadout;
+                    var verboseParryReadout = SupremeMeleeModSettings.Instance.VerboseParryReadout;
                     if (verboseParryReadout)
                     {
                         MoteMaker.ThrowText(pawn.DrawPos, pawn.Map,
@@ -147,7 +147,7 @@ public static class HarmonyPatches
             var num8 = Mathf.Clamp(num6 / num7, SupremeMeleeModSettings.Instance.MinParryMagnitude,
                 SupremeMeleeModSettings.Instance.MaxParryMagnitude);
             var num9 = Math.Min(meleeParryProjectileChance * num8,
-                SupremeMeleeModSettings.Instance.maximumParryChance);
+                SupremeMeleeModSettings.Instance.MaximumParryChance);
             if (!Rand.Chance(num9) && (!pawn.IsDualWielding() || !Rand.Chance(num9)))
             {
                 return true;
@@ -160,7 +160,7 @@ public static class HarmonyPatches
                            (Vector3Utility.HorizontalVectorFromAngle(dinfo.Angle).RotatedBy(180f) * 0.5f);
                 var scale2 = Mathf.Min(10f, 2f + (dinfo.Amount / 10f));
                 FleckMaker.Static(loc2, pawn.Map, FleckDefOf.ExplosionFlash, scale2);
-                var verboseParryReadout2 = SupremeMeleeModSettings.Instance.verboseParryReadout;
+                var verboseParryReadout2 = SupremeMeleeModSettings.Instance.VerboseParryReadout;
                 if (verboseParryReadout2)
                 {
                     MoteMaker.ThrowText(pawn.DrawPos, pawn.Map,

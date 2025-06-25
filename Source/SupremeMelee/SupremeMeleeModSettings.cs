@@ -6,28 +6,28 @@ public class SupremeMeleeModSettings : ModSettings
 {
     public static SupremeMeleeModSettings Instance;
 
-    public bool animalSizeScaling = true;
+    public bool AnimalSizeScaling = true;
 
-    public float maximumParryChance = 0.95f;
+    public float MaximumParryChance = 0.95f;
 
-    public float parryMagnitude = 2f;
+    public float ParryMagnitude = 2f;
 
-    public bool verboseParryReadout;
+    public bool VerboseParryReadout;
 
     public SupremeMeleeModSettings()
     {
         Instance = this;
     }
 
-    public float MinParryMagnitude => 1f / parryMagnitude;
+    public float MinParryMagnitude => 1f / ParryMagnitude;
 
-    public float MaxParryMagnitude => parryMagnitude;
+    public float MaxParryMagnitude => ParryMagnitude;
 
     public override void ExposeData()
     {
-        Scribe_Values.Look(ref verboseParryReadout, "verboseParryReadout");
-        Scribe_Values.Look(ref parryMagnitude, "parryMagnitude", 2f);
-        Scribe_Values.Look(ref maximumParryChance, "maximumParryChance", 0.95f);
-        Scribe_Values.Look(ref animalSizeScaling, "animalSizeScaling", true);
+        Scribe_Values.Look(ref VerboseParryReadout, "verboseParryReadout");
+        Scribe_Values.Look(ref ParryMagnitude, "parryMagnitude", 2f);
+        Scribe_Values.Look(ref MaximumParryChance, "maximumParryChance", 0.95f);
+        Scribe_Values.Look(ref AnimalSizeScaling, "animalSizeScaling", true);
     }
 }

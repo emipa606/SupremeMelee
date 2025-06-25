@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LanguageData>
+  <!-- EN: melee parry melee chance -->
+  <SupremeMelee_MeleeParryMeleeChance.label>melee parry melee chance</SupremeMelee_MeleeParryMeleeChance.label>
+  <!-- EN: Chance to parry using melee weapons. Attackers melee skill is taken in account if it bypasses the parry. Dual wielders get two chances to parry. -->
+  <SupremeMelee_MeleeParryMeleeChance.description>Chance to parry using melee weapons. Attackers melee skill is taken in account if it bypasses the parry. Dual wielders get two chances to parry.</SupremeMelee_MeleeParryMeleeChance.description>
+  <!-- EN: melee parry projectile chance -->
+  <SupremeMelee_MeleeParryProjectileChance.label>melee parry projectile chance</SupremeMelee_MeleeParryProjectileChance.label>
+  <!-- EN: Chance to parry a projectile using melee weapons. Attackers shooting skill is taken in account if it bypasses the parry. Dual wielders get two chances to parry. -->
+  <SupremeMelee_MeleeParryProjectileChance.description>Chance to parry a projectile using melee weapons. Attackers shooting skill is taken in account if it bypasses the parry. Dual wielders get two chances to parry.</SupremeMelee_MeleeParryProjectileChance.description>
+</LanguageData>

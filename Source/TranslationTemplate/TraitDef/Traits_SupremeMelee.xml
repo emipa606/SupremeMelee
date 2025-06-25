@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LanguageData>
+  <!-- EN: quick reflexes -->
+  <SupremeMelee_QuickReflexes.degreeDatas.quick_reflexes.label>quick reflexes</SupremeMelee_QuickReflexes.degreeDatas.quick_reflexes.label>
+  <!-- EN: {PAWN_nameDef}'s reflexes are truly out of this world. They can parry melee attacks without any training and even deflect projectiles, if luck permits. -->
+  <SupremeMelee_QuickReflexes.degreeDatas.quick_reflexes.description>{PAWN_nameDef}'s reflexes are truly out of this world. They can parry melee attacks without any training and even deflect projectiles, if luck permits.</SupremeMelee_QuickReflexes.degreeDatas.quick_reflexes.description>
+  <!-- EN: transcendent reflexes -->
+  <SupremeMelee_QuickReflexes.degreeDatas.transcendent_reflexes.label>transcendent reflexes</SupremeMelee_QuickReflexes.degreeDatas.transcendent_reflexes.label>
+  <!-- EN: {PAWN_nameDef}'s reflexes transcend common sense. They effortlessly parry melee attacks and even deflect projectiles, if luck permits. -->
+  <SupremeMelee_QuickReflexes.degreeDatas.transcendent_reflexes.description>{PAWN_nameDef}'s reflexes transcend common sense. They effortlessly parry melee attacks and even deflect projectiles, if luck permits.</SupremeMelee_QuickReflexes.degreeDatas.transcendent_reflexes.description>
+</LanguageData>
