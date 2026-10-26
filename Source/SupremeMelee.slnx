@@ -3,4 +3,22 @@
     <BuildType Name="Release" />
   </Configurations>
   <Project Path="SupremeMelee/SupremeMelee.csproj" />
+  <Folder Name="/.github/">
+    <File Path="../.github/copilot-instructions.md" />
+  </Folder>
+  <Folder Name="/XML/1.7/Patches/">
+    <File Path="../1.7/Patches/Patch_CONN.xml" />
+  </Folder>
+  <Folder Name="/XML/About/">
+    <File Path="../About/about.xml" />
+  </Folder>
+  <Folder Name="/XML/1.7/Defs/StatDefs/">
+    <File Path="../1.7/Defs/StatDefs/Stats_Pawns_Combat.xml" />
+  </Folder>
+  <Folder Name="/XML/1.7/Defs/TraitDefs/">
+    <File Path="../1.7/Defs/TraitDefs/Traits_SupremeMelee.xml" />
+  </Folder>
+  <Folder Name="/XML/Languages/English/Keyed/">
+    <File Path="../Languages/English/Keyed/SupremeMelee.xml" />
+  </Folder>
 </Solution>

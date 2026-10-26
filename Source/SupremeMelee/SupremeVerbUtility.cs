@@ -4,28 +4,31 @@ namespace SupremeMelee;
 
 public static class SupremeVerbUtility
 {
-    public static bool IsDualWielding(this Pawn pawn)
+    extension(Pawn pawn)
     {
-        Pawn_EquipmentTracker equipment;
-        if ((equipment = pawn.equipment) != null)
+        public bool IsDualWielding()
         {
-            return equipment.AllEquipmentListForReading.Count(thing =>
-                thing.def.IsMeleeWeapon && thing.def.equipmentType == EquipmentType.Primary) >= 2;
+            Pawn_EquipmentTracker equipment;
+            if ((equipment = pawn.equipment) != null)
+            {
+                return equipment.AllEquipmentListForReading.Count(thing =>
+                    thing.def.IsMeleeWeapon && thing.def.equipmentType == EquipmentType.Primary) >= 2;
+            }
+
+            return false;
         }
 
-        return false;
-    }
-
-    public static bool IsWieldingMeleeWeapons(this Pawn pawn)
-    {
-        Pawn_EquipmentTracker equipment;
-        if ((equipment = pawn.equipment) != null)
+        public bool IsWieldingMeleeWeapons()
         {
-            return equipment.AllEquipmentListForReading.Any(thing =>
-                       thing.def.IsMeleeWeapon && thing.def.equipmentType == EquipmentType.Primary) ||
-                   pawn.health.hediffSet.GetHediffsVerbs() != null;
-        }
+            Pawn_EquipmentTracker equipment;
+            if ((equipment = pawn.equipment) != null)
+            {
+                return equipment.AllEquipmentListForReading.Any(thing =>
+                           thing.def.IsMeleeWeapon && thing.def.equipmentType == EquipmentType.Primary) ||
+                       pawn.health.hediffSet.GetHediffsVerbs() != null;
+            }
 
-        return false;
+            return false;
+        }
     }
 }
